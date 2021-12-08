@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryHouse.Infrastructure.ContextDb;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryHouse.Web.Host
 {
@@ -22,13 +24,17 @@ namespace LibraryHouse.Web.Host
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<LibraryHouseDbContext>(options =>
+            {
+                options.UseMySql(Configuration.GetConnectionString("Default"));
+            },
+                ServiceLifetime.Transient);
+
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
