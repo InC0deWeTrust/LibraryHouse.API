@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryHouse.Web.Host", "LibraryHouse.Web.Host\LibraryHouse.Web.Host.csproj", "{C03CA9BB-9410-46AC-B933-18F8B0F7E79E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryHouse.Application", "LibraryHouse.Application\LibraryHouse.Application.csproj", "{8EC1FAA6-6C02-4CAA-929B-E42B440A018A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryHouse.Application", "LibraryHouse.Application\LibraryHouse.Application.csproj", "{8EC1FAA6-6C02-4CAA-929B-E42B440A018A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryHouse.Infrastructure", "LibraryHouse.Infrastructure\LibraryHouse.Infrastructure.csproj", "{07E1F5C9-CA52-4047-A107-F64484FBEC52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryHouse.Infrastructure", "LibraryHouse.Infrastructure\LibraryHouse.Infrastructure.csproj", "{07E1F5C9-CA52-4047-A107-F64484FBEC52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

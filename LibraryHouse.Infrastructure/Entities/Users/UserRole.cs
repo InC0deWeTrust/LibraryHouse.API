@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using LibraryHouse.Infrastructure.Entities.Books;
+using LibraryHouse.Infrastructure.Entities.Roles;
 
 namespace LibraryHouse.Infrastructure.Entities.Users
 {
-    [Table("UserBooks")]
-    public class UserBook
+    [Table("UserRoles")]
+    public class UserRole
     {
         public int Id { get; set; }
 
@@ -16,9 +16,9 @@ namespace LibraryHouse.Infrastructure.Entities.Users
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        public int BookId { get; set; }
+        public int RoleId { get; set; }
 
-        [ForeignKey("BookId")]
-        public Book Book { get; set; }
+        [ForeignKey("RoleId")]
+        public Role Role { get; set; }
     }
 }

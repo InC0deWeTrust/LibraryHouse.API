@@ -10,10 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryHouse.Application.DI;
+using LibraryHouse.Application.Middleware;
 using LibraryHouse.Infrastructure.ContextDb;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
-namespace LibraryHouse.Web.Host
+namespace LibraryHouse.WebHost
 {
     public class Startup
     {
@@ -29,22 +32,50 @@ namespace LibraryHouse.Web.Host
             services.AddDbContext<LibraryHouseDbContext>(options =>
             {
                 options.UseMySql(Configuration.GetConnectionString("Default"));
-            },
-                ServiceLifetime.Transient);
+            }, ServiceLifetime.Transient);
+
+            services.RegisterApplicationServices();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin();
+                    });
+            });
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "LibraryHouse Control Panel API",
+                    Description = "The tool for calling and testing methods from LibraryHouse API."
+                });
+            });
 
             services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                options.SwaggerEndpoint("v1/swagger.json", "Swagger.V1.LibraryHouse.API");
+            });
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
+
+            app.UseMiddleware<ErrorHandleMiddleware>();
 
             app.UseAuthorization();
 

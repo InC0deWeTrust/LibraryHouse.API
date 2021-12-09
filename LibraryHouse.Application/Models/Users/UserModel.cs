@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace LibraryHouse.Infrastructure.Entities.Users
+namespace LibraryHouse.Application.Models.Users
 {
-    [Table("Users")]
-    public class User
+    public class UserModel
     {
         public int Id { get; set; }
 
@@ -23,16 +20,10 @@ namespace LibraryHouse.Infrastructure.Entities.Users
 
         public int? BankAccount { get; set; }
 
-        [Phone]
         public string TelephoneNumber { get; set; }
 
-        [EmailAddress]
         public string Email { get; set; }
 
         public string Password { get; set; }
-
-        public ICollection<UserRole> UserRoles { get; set; }
-
-        public ICollection<UserBook> UserBooks { get; set; }
     }
 }

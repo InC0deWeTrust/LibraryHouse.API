@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace LibraryHouse.Infrastructure.Entities.Users
+namespace LibraryHouse.Application.Dtos.Users
 {
-    [Table("Users")]
-    public class User
+    public class UserDto
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
 
         public string FirstName { get; set; }
 
@@ -28,11 +26,5 @@ namespace LibraryHouse.Infrastructure.Entities.Users
 
         [EmailAddress]
         public string Email { get; set; }
-
-        public string Password { get; set; }
-
-        public ICollection<UserRole> UserRoles { get; set; }
-
-        public ICollection<UserBook> UserBooks { get; set; }
     }
 }

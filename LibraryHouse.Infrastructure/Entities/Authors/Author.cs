@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using LibraryHouse.Infrastructure.Entities.Books;
 
 namespace LibraryHouse.Infrastructure.Entities.Authors
 {
@@ -13,5 +14,7 @@ namespace LibraryHouse.Infrastructure.Entities.Authors
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public ICollection<Book> Books { get; set; }
     }
 }
