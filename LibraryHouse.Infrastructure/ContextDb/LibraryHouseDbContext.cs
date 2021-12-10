@@ -36,16 +36,44 @@ namespace LibraryHouse.Infrastructure.ContextDb
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region Indexes
-
+            #region UnusedIndexes
             //User
-            modelBuilder.Entity<User>(b =>
-            {
-                b.HasIndex(e => new {e.Email});
-                b.HasIndex(e => new {e.PassportData });
-                b.HasIndex(e => new {e.PassportData, e.Email});
-            });
+            //modelBuilder.Entity<User>(b =>
+            //{
+            //    b.HasIndex(e => new {e.Email});
+            //    b.HasIndex(e => new {e.PassportData });
+            //    b.HasIndex(e => new {e.PassportData, e.Email});
+            //});
 
+            //Role
+            //modelBuilder.Entity<Role>(b =>
+            //{
+            //    b.HasIndex(e => new { e.Name });
+            //});
+
+            //Book
+            //modelBuilder.Entity<Book>(b =>
+            //{
+            //    b.HasIndex(e => new {e.DateOfDelivery});
+            //});
+
+            //Company
+            //modelBuilder.Entity<Company>(b =>
+            //{
+            //    b.HasIndex(e => new {e.Name});
+            //});
+
+            //Author
+            //modelBuilder.Entity<Author>(b =>
+            //{
+            //    b.HasIndex(e => new {e.LastName});
+            //    b.HasIndex(e => new {e.FirstName, e.LastName});
+            //});
+
+            #endregion
+
+            #region Indexes
+            //User
             modelBuilder.Entity<UserRole>(b =>
             {
                 b.HasIndex(e => new {e.UserId, e.RoleId});
@@ -56,34 +84,10 @@ namespace LibraryHouse.Infrastructure.ContextDb
                 b.HasIndex(e => new { e.UserId, e.BookId });
             });
 
-            //Role
-            modelBuilder.Entity<Role>(b =>
-            {
-                b.HasIndex(e => new { e.Name });
-            });
-
             //Book
-            modelBuilder.Entity<Book>(b =>
-            {
-                b.HasIndex(e => new {e.DateOfDelivery});
-            });
-
             modelBuilder.Entity<BookCompany>(b =>
             {
                 b.HasIndex(e => new {e.BookId, e.CompanyId});
-            });
-
-            //Company
-            modelBuilder.Entity<Company>(b =>
-            {
-                b.HasIndex(e => new {e.Name});
-            });
-
-            //Author
-            modelBuilder.Entity<Author>(b =>
-            {
-                b.HasIndex(e => new {e.LastName});
-                b.HasIndex(e => new {e.FirstName, e.LastName});
             });
 
             #endregion

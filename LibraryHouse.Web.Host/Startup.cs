@@ -10,10 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryHouse.Application.Auth;
 using LibraryHouse.Application.DI;
 using LibraryHouse.Application.Middleware;
 using LibraryHouse.Infrastructure.ContextDb;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace LibraryHouse.WebHost
@@ -35,6 +38,32 @@ namespace LibraryHouse.WebHost
             }, ServiceLifetime.Transient);
 
             services.RegisterApplicationServices();
+
+            var authOptionsConfiguration = Configuration.GetSection("Auth");
+
+            services.Configure<AuthToken>(authOptionsConfiguration);
+
+            var authOptions = Configuration.GetSection("Auth")
+                .Get<AuthToken>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = authOptions.Issuer,
+
+                        ValidateAudience = true,
+                        ValidAudience = authOptions.Audience,
+
+                        ValidateLifetime = true,
+
+                        IssuerSigningKey = authOptions.GetSymmetricSecurityKey(),
+                        ValidateIssuerSigningKey = true
+                    };
+                });
 
             services.AddCors(options =>
             {

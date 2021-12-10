@@ -96,8 +96,7 @@ namespace LibraryHouse.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -121,8 +120,7 @@ namespace LibraryHouse.Infrastructure.Migrations
                 columns: table => new
                 {
                     BookId = table.Column<int>(nullable: false),
-                    CompanyId = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
+                    CompanyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,8 +144,7 @@ namespace LibraryHouse.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    BookId = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
+                    BookId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,16 +164,6 @@ namespace LibraryHouse.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Authors_LastName",
-                table: "Authors",
-                column: "LastName");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Authors_FirstName_LastName",
-                table: "Authors",
-                columns: new[] { "FirstName", "LastName" });
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BookCompanies_CompanyId",
                 table: "BookCompanies",
                 column: "CompanyId");
@@ -190,21 +177,6 @@ namespace LibraryHouse.Infrastructure.Migrations
                 name: "IX_Books_AuthorId",
                 table: "Books",
                 column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Books_DateOfDelivery",
-                table: "Books",
-                column: "DateOfDelivery");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Companies_Name",
-                table: "Companies",
-                column: "Name");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Roles_Name",
-                table: "Roles",
-                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserBooks_BookId",
@@ -225,21 +197,6 @@ namespace LibraryHouse.Infrastructure.Migrations
                 name: "IX_UserRoles_UserId_RoleId",
                 table: "UserRoles",
                 columns: new[] { "UserId", "RoleId" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
-                table: "Users",
-                column: "Email");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_PassportData",
-                table: "Users",
-                column: "PassportData");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_PassportData_Email",
-                table: "Users",
-                columns: new[] { "PassportData", "Email" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -24,16 +24,12 @@ namespace LibraryHouse.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LastName");
-
-                    b.HasIndex("FirstName", "LastName");
 
                     b.ToTable("Authors");
                 });
@@ -60,8 +56,6 @@ namespace LibraryHouse.Infrastructure.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("DateOfDelivery");
-
                     b.ToTable("Books");
                 });
 
@@ -71,9 +65,6 @@ namespace LibraryHouse.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("BookId", "CompanyId");
@@ -92,11 +83,9 @@ namespace LibraryHouse.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name");
 
                     b.ToTable("Companies");
                 });
@@ -108,11 +97,9 @@ namespace LibraryHouse.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name");
 
                     b.ToTable("Roles");
                 });
@@ -130,7 +117,7 @@ namespace LibraryHouse.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -139,7 +126,7 @@ namespace LibraryHouse.Infrastructure.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("PassportData")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Password")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -152,12 +139,6 @@ namespace LibraryHouse.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email");
-
-                    b.HasIndex("PassportData");
-
-                    b.HasIndex("PassportData", "Email");
-
                     b.ToTable("Users");
                 });
 
@@ -167,9 +148,6 @@ namespace LibraryHouse.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "BookId");
@@ -187,9 +165,6 @@ namespace LibraryHouse.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "RoleId");

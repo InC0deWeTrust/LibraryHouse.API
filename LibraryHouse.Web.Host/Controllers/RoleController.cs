@@ -25,5 +25,33 @@ namespace LibraryHouse.Web.Host.Controllers
         {
             await _roleService.Create(createRoleDto);
         }
+
+        [HttpGet]
+        [Route("Get")]
+        public async Task<RoleDto> GetRoleById([FromHeader] int roleId)
+        {
+            return await _roleService.GetById(roleId);
+        }
+
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<List<RoleDto>> GetAllRoles()
+        {
+            return await _roleService.GetAll();
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        public async Task UpdateRole([FromBody] RoleDto roleDto)
+        {
+            await _roleService.Update(roleDto);
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task DeleteRole(int roleId)
+        {
+            await _roleService.Delete(roleId);
+        }
     }
 }

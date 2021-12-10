@@ -9,8 +9,6 @@ namespace LibraryHouse.Infrastructure.Entities.Users
     [Table("UserRoles")]
     public class UserRole
     {
-        public int Id { get; set; }
-
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]
