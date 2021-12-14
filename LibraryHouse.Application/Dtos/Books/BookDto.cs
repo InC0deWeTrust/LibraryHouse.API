@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using LibraryHouse.Infrastructure.Entities.Authors;
+using LibraryHouse.Infrastructure.Entities.Books;
 
 namespace LibraryHouse.Application.Dtos.Books
 {
@@ -11,7 +12,7 @@ namespace LibraryHouse.Application.Dtos.Books
 
         public string Name { get; set; }
 
-        public string BookType { get; set; }
+        public BookType BookType { get; set; }
 
         public DateTime DateOfDelivery { get; set; }
 

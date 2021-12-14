@@ -15,10 +15,16 @@ namespace LibraryHouse.Infrastructure.Entities.Books
 
         public string Name { get; set; }
 
-        public BookTypeEnum Type { get; set; }
+        public int BookTypeId { get; set; }
+
+        [ForeignKey("BookTypeId")]
+        public BookType Type { get; set; }
 
         public DateTime DateOfDelivery { get; set; }
 
+        public int AuthorId { get; set; }
+
+        [ForeignKey("AuthorId")]
         public Author Author { get; set; }
 
         public ICollection<UserBook> UserBooks { get; set; }

@@ -3,14 +3,16 @@ using System;
 using LibraryHouse.Infrastructure.ContextDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LibraryHouse.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryHouseDbContext))]
-    partial class LibraryHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211214144408_AddForeignKeyOnBookTypeAndAuthor")]
+    partial class AddForeignKeyOnBookTypeAndAuthor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,10 +42,10 @@ namespace LibraryHouse.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("AuthorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BookTypeId")
+                    b.Property<int?>("BookTypeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfDelivery")
@@ -196,15 +198,11 @@ namespace LibraryHouse.Infrastructure.Migrations
                 {
                     b.HasOne("LibraryHouse.Infrastructure.Entities.Authors.Author", "Author")
                         .WithMany("Books")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("LibraryHouse.Infrastructure.Entities.Books.BookType", "Type")
                         .WithMany()
-                        .HasForeignKey("BookTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookTypeId");
                 });
 
             modelBuilder.Entity("LibraryHouse.Infrastructure.Entities.Books.BookCompany", b =>

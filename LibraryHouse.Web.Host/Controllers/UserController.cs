@@ -39,5 +39,54 @@ namespace LibraryHouse.Web.Host.Controllers
         {
             return await _userService.GetAll();
         }
+
+        [HttpPut]
+        [Route("Update")]
+        public async Task UpdateUser([FromBody] UpdateUserDto updateUserDto)
+        {
+            await _userService.Update(updateUserDto);
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task DeleteUser([FromHeader] int userId)
+        {
+            await _userService.Delete(userId);
+        }
+
+        [HttpPost]
+        [Route("AssignRoleForUser")]
+        public async Task AddRoleForUser([FromHeader] int userId, int roleId)
+        {
+            await _userService.AddRole(userId, roleId);
+        }
+
+        [HttpDelete]
+        [Route("UnsignRoleForUser")]
+        public async Task RemoveRoleFromUser([FromHeader] int userId, int roleId)
+        {
+            await _userService.RemoveRole(userId, roleId);
+        }
+
+        [HttpPut]
+        [Route("UpdatePassword")]
+        public async Task UpdateUserPassword([FromBody] UpdateUserPasswordDto updateUserPasswordDto)
+        {
+            await _userService.UpdatePassword(updateUserPasswordDto);
+        }
+
+        [HttpPut]
+        [Route("UpdatePassportData")]
+        public async Task UpdateUserPassportData([FromBody] UpdateUserPassportDataDto updateUserPassportDataDto)
+        {
+            await _userService.UpdatePasswordData(updateUserPassportDataDto);
+        }
+
+        [HttpPut]
+        [Route("UpdateBankAccount")]
+        public async Task UpdateUserBankAccount([FromBody] UpdateUserBankAccountDto updateUserBankAccountDto)
+        {
+            await _userService.UpdateBankAccount(updateUserBankAccountDto);
+        }
     }
 }

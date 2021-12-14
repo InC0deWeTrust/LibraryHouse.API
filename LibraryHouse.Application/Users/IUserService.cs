@@ -13,5 +13,19 @@ namespace LibraryHouse.Application.Users
         Task<UserDto> GetById(int userId);
 
         Task<List<UserDto>> GetAll();
+
+        Task Update(UpdateUserDto updateUserDto);
+
+        Task Delete(int userId);
+
+        Task AddRole(int userId, int roleId);
+
+        Task RemoveRole(int userId, int roleId);
+
+        Task UpdatePassword(UpdateUserPasswordDto updateUserPasswordDto);
+
+        Task UpdatePasswordData(UpdateUserPassportDataDto updateUserPassportDataDto);
+
+        Task UpdateBankAccount(UpdateUserBankAccountDto updateUserBankAccountDto);
     }
 }

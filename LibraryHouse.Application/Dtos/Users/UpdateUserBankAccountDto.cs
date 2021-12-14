@@ -8,10 +8,8 @@ namespace LibraryHouse.Application.Dtos.Users
     public class UpdateUserBankAccountDto
     {
         public int UserId { get; set; }
-        public int BankAccount { get; set; }
 
-        [EmailAddress]
-        public string Email { get; set; }
+        public int BankAccount { get; set; }
 
         public string Password { get; set; }
     }

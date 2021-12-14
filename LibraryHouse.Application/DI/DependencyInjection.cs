@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
 using LibraryHouse.Application.Auth;
+using LibraryHouse.Application.Authors;
+using LibraryHouse.Application.Books;
 using LibraryHouse.Application.Roles;
 using LibraryHouse.Application.Users;
 using LibraryHouse.Infrastructure.DI;
@@ -18,6 +20,8 @@ namespace LibraryHouse.Application.DI
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IAuthorService, AuthorService>();
             services.RegisterInfrastructureServices();
         }
     }

@@ -24,65 +24,6 @@ namespace LibraryHouse.Application.Mapper
     {
         public Mapper()
         {
-            ////TODO: REMOVE ALL EXISTING MODELS AND REPLACE THEM WITH DTOS
-            ////Roles
-            //CreateMap<RoleModel, Role>()
-            //    .ReverseMap();
-            //CreateMap<CreateRoleDto, RoleModel>();
-            //CreateMap<RoleDto, RoleModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.RoleId))
-            //    .ReverseMap();
-            //CreateMap<Role, RoleDto>()
-            //    .ForMember(dest => dest.RoleId, opt => opt.MapFrom(x => x.Id));
-
-            ////Users
-            //CreateMap<UserModel, User>()
-            //    .ReverseMap();
-            //CreateMap<CreateUserDto, UserModel>();
-            //CreateMap<UpdateUserBankAccountDto, UserModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.UserId));
-            //CreateMap<UpdateUserDto, UserModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.UserId));
-            //CreateMap<UpdateUserPassportDataDto, UserModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.UserId));
-            //CreateMap<UpdateUserPasswordDto, UserModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.UserId));
-            //CreateMap<UserDto, UserModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.UserId))
-            //    .ReverseMap();
-
-            ////Books
-            //CreateMap<BookModel, Book>()
-            //    .ReverseMap();
-            ////TODO: AND THIS ONE ALSO CHECK
-            //CreateMap<BookDto, BookModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.BookId))
-            //    .ForMember(dest => dest.Type, opt => opt.MapFrom(x => x.BookType))
-            //    .ReverseMap();
-            ////TODO: CHECK IF THIS GONNA WORK
-            //CreateMap<CreateBookDto, BookModel>()
-            //    .ForMember(dest => dest.Type, opt => opt.MapFrom(x => x.BookType));
-            //CreateMap<UpdateBookDto, BookModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.BookId))
-            //    .ForMember(dest => dest.Type, opt => opt.MapFrom(x => x.BookType));
-
-            ////Companies
-            //CreateMap<CompanyModel, Company>()
-            //    .ReverseMap();
-            //CreateMap<CompanyDto, CompanyModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.CompanyId))
-            //    .ReverseMap();
-            //CreateMap<CreateCompanyDto, CompanyModel>();
-
-            ////Authors
-            //CreateMap<AuthorModel, AuthorModel>()
-            //    .ReverseMap();
-            //CreateMap<AuthorDto, AuthorModel>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.AuthorId))
-            //    .ReverseMap();
-            //CreateMap<CreateAuthorDto, AuthorModel>();
-
-
             //CHANGE SUBJECT TO DTOS
             //Author
             CreateMap<AuthorDto, Author>()
@@ -94,6 +35,9 @@ namespace LibraryHouse.Application.Mapper
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.BookId))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(x => x.BookType))
                 .ReverseMap();
+            CreateMap<CreateBookDto, Book>()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(x => x.BookType));
+                //.ForMember(dest => dest.)
 
             //Company
             CreateMap<CompanyDto, Company>()

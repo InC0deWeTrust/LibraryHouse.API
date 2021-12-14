@@ -34,6 +34,8 @@ namespace LibraryHouse.Infrastructure.ContextDb
 
         public virtual DbSet<Author> Authors { get; set; }
 
+        public virtual DbSet<BookType> BookTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region UnusedIndexes
