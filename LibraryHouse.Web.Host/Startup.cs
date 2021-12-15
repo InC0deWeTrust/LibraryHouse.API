@@ -10,8 +10,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryHouse.Application.Auth;
+using LibraryHouse.Application.DI;
+using LibraryHouse.Application.Middleware;
+using LibraryHouse.Infrastructure.ContextDb;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
-namespace LibraryHouse.Web.Host
+namespace LibraryHouse.WebHost
 {
     public class Startup
     {
@@ -22,23 +30,81 @@ namespace LibraryHouse.Web.Host
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<LibraryHouseDbContext>(options =>
+            {
+                options.UseMySql(Configuration.GetConnectionString("Default"));
+            }, ServiceLifetime.Transient);
+
+            services.RegisterApplicationServices();
+
+            var authOptionsConfiguration = Configuration.GetSection("Auth");
+
+            services.Configure<AuthToken>(authOptionsConfiguration);
+
+            var authOptions = Configuration.GetSection("Auth")
+                .Get<AuthToken>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = authOptions.Issuer,
+
+                        ValidateAudience = true,
+                        ValidAudience = authOptions.Audience,
+
+                        ValidateLifetime = true,
+
+                        IssuerSigningKey = authOptions.GetSymmetricSecurityKey(),
+                        ValidateIssuerSigningKey = true
+                    };
+                });
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin();
+                    });
+            });
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "LibraryHouse Control Panel API",
+                    Description = "The tool for calling and testing methods from LibraryHouse API."
+                });
+            });
+
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                options.SwaggerEndpoint("v1/swagger.json", "Swagger.V1.LibraryHouse.API");
+            });
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
+
+            app.UseMiddleware<ErrorHandleMiddleware>();
 
             app.UseAuthorization();
 

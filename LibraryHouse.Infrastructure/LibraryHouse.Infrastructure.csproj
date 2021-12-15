@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20211209092421_Initial.cs" />
+    <Compile Remove="Migrations\20211209092421_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20211209132552_Reset.cs" />
+    <Compile Remove="Migrations\20211209132552_Reset.Designer.cs" />
+    <Compile Remove="Migrations\20211209133150_Initial.cs" />
+    <Compile Remove="Migrations\20211209133150_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20211215075058_Test.cs" />
+    <Compile Remove="Migrations\20211215075058_Test.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.21">
+      <PrivateAssets></PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.21">
+      <PrivateAssets></PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.21" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+  </ItemGroup>
+
+</Project>
