@@ -23,6 +23,7 @@ namespace LibraryHouse.Application.Users
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Role> _roleRepository;
         private readonly IRepository<UserRole> _userRoleRepository;
+        private readonly IRepository<UserBook> _userBookRepository;
         private readonly IRoleService _roleService;
 
         public UserService(
@@ -31,6 +32,7 @@ namespace LibraryHouse.Application.Users
             IRepository<User> userRepository,
             IRepository<Role> roleRepository,
             IRepository<UserRole> userRoleRepository,
+            IRepository<UserBook> userBookRepository,
             IRoleService roleService)
         {
             _logger = logger;
@@ -38,6 +40,7 @@ namespace LibraryHouse.Application.Users
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _userRoleRepository = userRoleRepository;
+            _userBookRepository = userBookRepository;
             _roleService = roleService;
         }
 
@@ -123,32 +126,12 @@ namespace LibraryHouse.Application.Users
         {
             await CheckExistingUserAndRole(userId, roleId);
 
-            var existingUserRole = await _userRoleRepository
-                .GetAll()
-                .AnyAsync(x => x.UserId == userId && x.RoleId == roleId);
-
-            if (existingUserRole)
-            {
-                _logger.LogError($"User with Id: {userId} and role with Id: {roleId} already set.");
-                throw new CustomUserFriendlyException($"User already have this role!");
-            }
-
             await _roleService.AddRoleForUser(userId, roleId);
         }
 
         public async Task RemoveRole(int userId, int roleId)
         {
             await CheckExistingUserAndRole(userId, roleId);
-
-            var existingUserRole = await _userRoleRepository
-                .GetAll()
-                .AnyAsync(x => x.UserId == userId && x.RoleId == roleId);
-
-            if (!existingUserRole)
-            {
-                _logger.LogError($"User with Id: {userId} and role with Id: {roleId} are not bound.");
-                throw new CustomUserFriendlyException($"Unable to remove such role from user!");
-            }
 
             await _roleService.RemoveRoleFromUser(userId, roleId);
         }
@@ -235,6 +218,42 @@ namespace LibraryHouse.Application.Users
             user.BankAccount = updateUserBankAccountDto.BankAccount;
 
             _userRepository.Update(user);
+        }
+
+        public async Task ReserveBookForUser(int userId, int bookId)
+        {
+            var existingUserBook = await _userBookRepository
+                .GetAll()
+                .AnyAsync(x => x.UserId == userId && x.BookId == bookId);
+
+            if (existingUserBook)
+            {
+                _logger.LogError($"Unable to add book with Id: {bookId} to user with Id: {userId} because relation already exist.");
+                throw new CustomUserFriendlyException("User with this book already exist!");
+            }
+
+            var newUserBook = new UserBook
+            {
+                UserId = userId,
+                BookId = bookId
+            };
+
+            await _userBookRepository.AddAsync(newUserBook);
+        }
+
+        public async Task UnreserveBookForUser(int userId, int bookId)
+        {
+            var existingUserBook = await _userBookRepository
+                .GetAll()
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.BookId == bookId);
+
+            if (existingUserBook == null)
+            {
+                _logger.LogError($"Unable to remove book with Id: {bookId} from user with Id: {userId} because they are not related.");
+                throw new CustomUserFriendlyException("User with this book don't exist!");
+            }
+
+            _userBookRepository.Delete(existingUserBook);
         }
     }
 }

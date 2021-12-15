@@ -8,8 +8,6 @@ namespace LibraryHouse.Application.Dtos.Books
     {
         public int BookId { get; set; }
 
-        public string Name { get; set; }
-
         public string BookType { get; set; }
     }
 }

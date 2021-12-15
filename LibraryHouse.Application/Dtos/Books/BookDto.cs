@@ -12,10 +12,10 @@ namespace LibraryHouse.Application.Dtos.Books
 
         public string Name { get; set; }
 
-        public BookType BookType { get; set; }
+        public int BookTypeId { get; set; }
 
         public DateTime DateOfDelivery { get; set; }
 
-        public Author Author { get; set; }
+        public int AuthorId { get; set; }
     }
 }

@@ -27,5 +27,9 @@ namespace LibraryHouse.Application.Users
         Task UpdatePasswordData(UpdateUserPassportDataDto updateUserPassportDataDto);
 
         Task UpdateBankAccount(UpdateUserBankAccountDto updateUserBankAccountDto);
+
+        Task ReserveBookForUser(int userId, int bookId);
+
+        Task UnreserveBookForUser(int userId, int bookId);
     }
 }
