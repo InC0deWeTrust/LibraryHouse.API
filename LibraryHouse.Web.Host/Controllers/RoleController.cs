@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibraryHouse.Application.Dtos.Roles;
 using LibraryHouse.Application.Roles;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryHouse.Web.Host.Controllers
 {
@@ -20,6 +21,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         [Route("Create")]
         public async Task CreateRole([FromBody] CreateRoleDto createRoleDto)
         {
@@ -27,6 +29,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         [Route("Get")]
         public async Task<RoleDto> GetRoleById([FromHeader] int roleId)
         {
@@ -34,6 +37,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         [Route("GetAll")]
         public async Task<List<RoleDto>> GetAllRoles()
         {
@@ -41,6 +45,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         [Route("Update")]
         public async Task UpdateRole([FromBody] RoleDto roleDto)
         {
@@ -48,6 +53,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         [Route("Delete")]
         public async Task DeleteRole(int roleId)
         {

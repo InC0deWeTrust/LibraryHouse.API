@@ -17,7 +17,7 @@ namespace LibraryHouse.Application.Validators.Companies
                         "Name of the company is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of company name is 64 symbols!"));
         }
     }
 }

@@ -14,10 +14,10 @@ namespace LibraryHouse.Application.Validators.Login
             RuleFor(x => x.Email)
                 .EmailAddress().OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "This should be an email!"))
+                        "Email is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of email is 64 symbols!"));
 
             RuleFor(x => x.Password)
                 .NotEmpty().OnFailure(
@@ -25,7 +25,7 @@ namespace LibraryHouse.Application.Validators.Login
                         "Password is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of password is 64 symbols!"));
         }
     }
 }

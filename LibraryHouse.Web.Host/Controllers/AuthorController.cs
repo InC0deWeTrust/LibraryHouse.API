@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibraryHouse.Application.Authors;
 using LibraryHouse.Application.Dtos.Authors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryHouse.Web.Host.Controllers
 {

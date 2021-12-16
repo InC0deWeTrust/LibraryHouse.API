@@ -17,7 +17,7 @@ namespace LibraryHouse.Application.Validators.Users
                         "First name is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of first name is 64 symbols!"));
 
             RuleFor(x => x.LastName)
                 .NotEmpty().OnFailure(
@@ -25,23 +25,23 @@ namespace LibraryHouse.Application.Validators.Users
                         "Last name is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of last name is 64 symbols!"));
 
             RuleFor(x => x.Email)
                 .EmailAddress().OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "This should be an email!"))
+                        "Email is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of email is 64 symbols!"));
 
             RuleFor(x => x.Address)
                 .NotEmpty().OnFailure(
                     x => throw new CustomUserFriendlyException(
                         "Address is required!"))
-                .MaximumLength(64).OnFailure(
+                .MaximumLength(128).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of address is 128 symbols!"));
 
             RuleFor(x => x.TelephoneNumber)
                 .NotEmpty().OnFailure(
@@ -49,10 +49,10 @@ namespace LibraryHouse.Application.Validators.Users
                         "Telephone Number is required!"))
                 .MinimumLength(10).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Min length is 10 symbols!"))
+                        "Min length of phone number is 10 symbols!"))
                 .MaximumLength(10).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Min length is 10 symbols!"));
+                        "Min length of phone number is 10 symbols!"));
         }
     }
 }

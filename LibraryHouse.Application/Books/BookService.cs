@@ -93,10 +93,27 @@ namespace LibraryHouse.Application.Books
             if (book == null)
             {
                 _logger.LogError($"Unable to find book with Id: {bookId}.");
-                throw new CustomUserFriendlyException("Unable to find book with Id: {bookId}!");
+                throw new CustomUserFriendlyException($"Unable to find book with Id: {bookId}!");
             }
 
             return _mapper.Map<BookDto>(book);
+        }
+
+        public async Task<FullInfoBookDto> GetByIdFullInfoAboutBook(int bookId)
+        {
+            var book = await _bookRepository
+                .GetAll()
+                .Include(x => x.Author)
+                .Include(x => x.Type)
+                .FirstOrDefaultAsync(x => x.Id == bookId);
+
+            if (book == null)
+            {
+                _logger.LogError($"Unable to find book with Id: {bookId}.");
+                throw new CustomUserFriendlyException($"Unable to find book with Id: {bookId}!");
+            }
+
+            return _mapper.Map<FullInfoBookDto>(book);
         }
 
         public async Task<List<BookDto>> GetAll()
@@ -208,5 +225,13 @@ namespace LibraryHouse.Application.Books
             }
         }
 
+        public async Task<List<BookTypeDto>> GetAllTypesForBook()
+        {
+            var bookTypes = await _bookTypeRepository
+                .GetAll()
+                .ToListAsync();
+
+            return _mapper.Map<List<BookTypeDto>>(bookTypes);
+        }
     }
 }

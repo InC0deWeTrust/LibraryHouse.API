@@ -12,6 +12,8 @@ namespace LibraryHouse.Application.Books
 
         Task<BookDto> GetById(int bookId);
 
+        Task<FullInfoBookDto> GetByIdFullInfoAboutBook(int bookId);
+
         Task<List<BookDto>> GetAll();
 
         Task Update(UpdateBookDto updateBookDto);
@@ -25,5 +27,7 @@ namespace LibraryHouse.Application.Books
         Task AssignCompanyToBook(int bookId, int companyId);
 
         Task UnsignCompanyForBook(int bookId, int companyId);
+
+        Task<List<BookTypeDto>> GetAllTypesForBook();
     }
 }
