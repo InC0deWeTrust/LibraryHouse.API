@@ -17,15 +17,15 @@ namespace LibraryHouse.Application.Validators.Books
                         "Name of the book is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of book name is 64 symbols!"));
 
             RuleFor(x => x.BookType)
                 .NotEmpty().OnFailure(
                     x => throw new CustomUserFriendlyException(
                         "Book type is required!"))
-                .MaximumLength(30).OnFailure(
+                .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 30 symbols!"));
+                        "Max length of book name is 64 symbols!"));
 
             RuleFor(x => x.AuthorName)
                 .NotEmpty().OnFailure(
@@ -33,7 +33,7 @@ namespace LibraryHouse.Application.Validators.Books
                         "Author name is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of author name is 64 symbols!"));
 
             RuleFor(x => x.AuthorSurname)
                 .NotEmpty().OnFailure(
@@ -41,7 +41,7 @@ namespace LibraryHouse.Application.Validators.Books
                         "Author surname is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of author surname is 64 symbols!"));
         }
     }
 }

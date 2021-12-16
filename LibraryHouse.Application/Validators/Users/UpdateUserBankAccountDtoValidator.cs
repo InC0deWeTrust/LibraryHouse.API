@@ -17,7 +17,7 @@ namespace LibraryHouse.Application.Validators.Users
                         "Password is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of password is 64 symbols!"));
 
             RuleFor(x => x.BankAccount)
                 .NotEmpty().OnFailure(

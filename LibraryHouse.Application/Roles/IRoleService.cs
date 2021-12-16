@@ -18,7 +18,7 @@ namespace LibraryHouse.Application.Roles
 
         Task Delete(int roleId);
 
-        Task SetBasicRole(int usedId);
+        Task SetUserRole(int usedId);
 
         Task AddRoleForUser(int userId, int roleId);
 

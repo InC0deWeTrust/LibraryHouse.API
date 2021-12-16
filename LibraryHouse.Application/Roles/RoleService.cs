@@ -102,7 +102,7 @@ namespace LibraryHouse.Application.Roles
             _roleRepository.Delete(existingRole);
         }
 
-        public async Task SetBasicRole(int usedId)
+        public async Task SetUserRole(int usedId)
         {
             var newBasicRole = new UserRole
             {
@@ -151,14 +151,14 @@ namespace LibraryHouse.Application.Roles
 
         public async Task<List<RoleDto>> GetAllRolesForUser(int usedId)
         {
-            var test = await _userRoleRepository
+            var listOfRolesForSpecificUser = await _userRoleRepository
                 .GetAll()
                 .Include(x => x.Role)
                 .Where(x => x.UserId == usedId)
                 .Select(x => x.Role)
                 .ToListAsync();
 
-            return _mapper.Map<List<RoleDto>>(test);
+            return _mapper.Map<List<RoleDto>>(listOfRolesForSpecificUser);
         }
     }
 }

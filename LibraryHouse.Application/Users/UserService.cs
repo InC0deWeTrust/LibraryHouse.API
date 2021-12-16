@@ -22,7 +22,6 @@ namespace LibraryHouse.Application.Users
         private readonly IMapper _mapper;
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Role> _roleRepository;
-        private readonly IRepository<UserRole> _userRoleRepository;
         private readonly IRepository<UserBook> _userBookRepository;
         private readonly IRoleService _roleService;
 
@@ -31,7 +30,6 @@ namespace LibraryHouse.Application.Users
             IMapper mapper,
             IRepository<User> userRepository,
             IRepository<Role> roleRepository,
-            IRepository<UserRole> userRoleRepository,
             IRepository<UserBook> userBookRepository,
             IRoleService roleService)
         {
@@ -39,7 +37,6 @@ namespace LibraryHouse.Application.Users
             _mapper = mapper;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
-            _userRoleRepository = userRoleRepository;
             _userBookRepository = userBookRepository;
             _roleService = roleService;
         }
@@ -64,7 +61,7 @@ namespace LibraryHouse.Application.Users
 
             await _userRepository.AddAsync(newUser);
 
-            await _roleService.SetBasicRole(newUser.Id);
+            await _roleService.SetUserRole(newUser.Id);
         }
 
         public async Task<UserDto> GetById(int userId)
@@ -165,7 +162,7 @@ namespace LibraryHouse.Application.Users
 
             if (!verifiedPassword)
             {
-                _logger.LogError($"Unable to change old password with a new one.");
+                _logger.LogError($"Passwords are not the same. Unable to change old password with a new one.");
                 throw new CustomUserFriendlyException($"Incorrect password or email. Try again with different ones!");
             }
 
@@ -229,7 +226,7 @@ namespace LibraryHouse.Application.Users
             if (existingUserBook)
             {
                 _logger.LogError($"Unable to add book with Id: {bookId} to user with Id: {userId} because relation already exist.");
-                throw new CustomUserFriendlyException("User with this book already exist!");
+                throw new CustomUserFriendlyException("Specified user already reserved this book!");
             }
 
             var newUserBook = new UserBook
@@ -250,7 +247,7 @@ namespace LibraryHouse.Application.Users
             if (existingUserBook == null)
             {
                 _logger.LogError($"Unable to remove book with Id: {bookId} from user with Id: {userId} because they are not related.");
-                throw new CustomUserFriendlyException("User with this book don't exist!");
+                throw new CustomUserFriendlyException("Specified user is no longer reserving this book!");
             }
 
             _userBookRepository.Delete(existingUserBook);

@@ -17,7 +17,7 @@ namespace LibraryHouse.Application.Validators.Users
                         "Password is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of password is 64 symbols!"));
 
             RuleFor(x => x.PassportData)
                 .NotEmpty().OnFailure(
@@ -25,7 +25,7 @@ namespace LibraryHouse.Application.Validators.Users
                         "Passport Data is required!"))
                 .MaximumLength(12).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 12 symbols!"));
+                        "Max length of passport data is 12 symbols!"));
         }
     }
 }

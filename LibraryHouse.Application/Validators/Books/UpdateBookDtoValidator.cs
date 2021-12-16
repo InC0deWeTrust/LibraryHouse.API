@@ -15,9 +15,9 @@ namespace LibraryHouse.Application.Validators.Books
                 .NotEmpty().OnFailure(
                     x => throw new CustomUserFriendlyException(
                         "Book type is required!"))
-                .MaximumLength(30).OnFailure(
+                .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 30 symbols!"));
+                        "Max length of book type is 64 symbols!"));
         }
     }
 }

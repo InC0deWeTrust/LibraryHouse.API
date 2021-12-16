@@ -7,10 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LibraryHouse.Application.Dtos.Auth;
 using LibraryHouse.Application.Dtos.Login;
-using LibraryHouse.Application.Dtos.Users;
-using LibraryHouse.Application.Helpers;
 using LibraryHouse.Application.Roles;
-using LibraryHouse.Application.Users;
 using LibraryHouse.Infrastructure.Entities.Users;
 using LibraryHouse.Infrastructure.GenericRepository;
 using Microsoft.EntityFrameworkCore;
@@ -68,7 +65,7 @@ namespace LibraryHouse.Application.Auth
             if (user == null)
             {
                 _logger.LogError($"Can't find user with email: {email}.");
-                throw new CustomUserFriendlyException("Password or Email is incorrect! Try again with a different ones.");
+                throw new UnauthorizedAccessException("Password or Email is incorrect! Try again with a different ones.");
             }
 
             var verified = BCrypt.Net.BCrypt.Verify(password, user.Password);
@@ -76,7 +73,7 @@ namespace LibraryHouse.Application.Auth
             if (!verified)
             {
                 _logger.LogError("Passwords are not the same.");
-                throw new CustomUserFriendlyException("Password or Email is incorrect! Try again with a different ones.");
+                throw new UnauthorizedAccessException("Password or Email is incorrect! Try again with a different ones.");
             }
 
             return user;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using AutoMapper;
 using LibraryHouse.Application.Dtos.Authors;
@@ -27,10 +28,14 @@ namespace LibraryHouse.Application.Mapper
             //Book
             CreateMap<BookDto, Book>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.BookId))
-                //.ForMember(dest => dest.Type, opt => opt.MapFrom(x => x.BookType))
                 .ReverseMap();
             CreateMap<CreateBookDto, Book>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(x => x.BookType));
+            CreateMap<Book, FullInfoBookDto>()
+                .ForMember(dest => dest.BookId, opt => opt.MapFrom(x => x.Id));
+            CreateMap<BookType, BookTypeDto>()
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(dest => dest.BookType, opt => opt.MapFrom(x => x.Type));
 
             //Company
             CreateMap<CompanyDto, Company>()

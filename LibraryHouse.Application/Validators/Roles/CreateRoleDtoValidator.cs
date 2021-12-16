@@ -17,7 +17,7 @@ namespace LibraryHouse.Application.Validators.Roles
                         "Role name is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of role name is 64 symbols!"));
         }
     }
 }

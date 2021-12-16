@@ -14,23 +14,23 @@ namespace LibraryHouse.Application.Validators.Users
             RuleFor(x => x.Email)
                 .EmailAddress().OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "This should be an email!"))
+                        "Email is required!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of email is 64 symbols!"));
 
             RuleFor(x => x.OldPassword)
                 .NotEmpty().OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Old Password is required!"));
+                        "Old Password is required in order to change for new one!"));
 
             RuleFor(x => x.NewPassword)
                 .NotEmpty().OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "New Password is required!"))
+                        "New Password is required in order to replace your old one!"))
                 .MaximumLength(64).OnFailure(
                     x => throw new CustomUserFriendlyException(
-                        "Max length is 64 symbols!"));
+                        "Max length of new password is 64 symbols!"));
         }
     }
 }
