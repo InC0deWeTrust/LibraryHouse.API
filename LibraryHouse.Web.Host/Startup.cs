@@ -72,7 +72,7 @@ namespace LibraryHouse.WebHost
                     {
                         builder.AllowAnyOrigin()
                             .AllowAnyMethod()
-                            .AllowAnyOrigin();
+                            .AllowAnyHeader();
                     });
             });
 
@@ -107,6 +107,8 @@ namespace LibraryHouse.WebHost
             app.UseCors();
 
             app.UseMiddleware<ErrorHandleMiddleware>();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

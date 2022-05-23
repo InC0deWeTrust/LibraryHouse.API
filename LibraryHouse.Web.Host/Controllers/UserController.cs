@@ -28,7 +28,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        //[Authorize(Roles = "SuperAdmin, Admin")]
         [Route("Get")]
         public async Task<UserDto> GetUserById([FromHeader] int userId)
         {
@@ -36,7 +36,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        //[Authorize(Roles = "SuperAdmin, Admin")]
         [Route("GetAll")]
         public async Task<List<UserDto>> GetAllUsers()
         {
@@ -44,7 +44,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "SuperAdmin, Admin, User")]
+        //[Authorize(Roles = "SuperAdmin, Admin")]
         [Route("Update")]
         public async Task UpdateUser([FromBody] UpdateUserDto updateUserDto)
         {
@@ -52,7 +52,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "SuperAdmin, Admin, User")]
+        //[Authorize(Roles = "SuperAdmin, Admin")]
         [Route("Delete")]
         public async Task DeleteUser([FromHeader] int userId)
         {
@@ -60,7 +60,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        //[Authorize(Roles = "SuperAdmin, Admin")]
         [Route("AssignRoleForUser")]
         public async Task AddRoleForUser([FromHeader] int userId, int roleId)
         {
@@ -68,7 +68,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        //[Authorize(Roles = "SuperAdmin, Admin")]
         [Route("UnsignRoleForUser")]
         public async Task RemoveRoleFromUser([FromHeader] int userId, int roleId)
         {
@@ -76,7 +76,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User, SuperAdmin, Admin")]
         [Route("UpdatePassword")]
         public async Task UpdateUserPassword([FromBody] UpdateUserPasswordDto updateUserPasswordDto)
         {
@@ -84,7 +84,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [Route("UpdatePassportData")]
         public async Task UpdateUserPassportData([FromBody] UpdateUserPassportDataDto updateUserPassportDataDto)
         {
@@ -92,7 +92,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [Route("UpdateBankAccount")]
         public async Task UpdateUserBankAccount([FromBody] UpdateUserBankAccountDto updateUserBankAccountDto)
         {
