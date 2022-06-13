@@ -17,5 +17,7 @@ namespace LibraryHouse.Application.Dtos.Books
         public DateTime DateOfDelivery { get; set; }
 
         public Author Author { get; set; }
+
+        public string Description { get; set; }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using LibraryHouse.Application.Dtos.Authors;
 using LibraryHouse.Application.Helpers;
 using LibraryHouse.Infrastructure.Entities.Authors;
+using LibraryHouse.Infrastructure.Entities.Books;
 using LibraryHouse.Infrastructure.GenericRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,15 +19,18 @@ namespace LibraryHouse.Application.Authors
         private readonly ILogger<AuthorService> _logger;
         private readonly IMapper _mapper;
         private readonly IRepository<Author> _authorRepository;
+        private readonly IRepository<Book> _bookRepository;
 
         public AuthorService(
             ILogger<AuthorService> logger,
             IMapper mapper,
-            IRepository<Author> authorRepository)
+            IRepository<Author> authorRepository,
+            IRepository<Book> bookRepository)
         {
             _logger = logger;
             _mapper = mapper;
             _authorRepository = authorRepository;
+            _bookRepository = bookRepository;
         }
 
         public async Task<bool> Create(Author author)
@@ -54,7 +59,16 @@ namespace LibraryHouse.Application.Authors
                 throw new CustomUserFriendlyException($"Unable to find author with Id: {authorId}!");
             }
 
-            return _mapper.Map<AuthorDto>(author);
+            var authorDto = _mapper.Map<AuthorDto>(author);
+
+            var bookNames = await _bookRepository.GetAll()
+                .Where(x => x.AuthorId == authorDto.AuthorId)
+                .Select(x => x.Name)
+                .ToListAsync();
+
+            authorDto.BookNames = bookNames;
+
+            return authorDto;
         }
 
         public async Task<List<AuthorDto>> GetAll()

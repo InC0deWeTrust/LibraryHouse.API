@@ -3,14 +3,16 @@ using System;
 using LibraryHouse.Infrastructure.ContextDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LibraryHouse.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryHouseDbContext))]
-    partial class LibraryHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220523131018_AddAttachmentForBook")]
+    partial class AddAttachmentForBook
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,14 +54,8 @@ namespace LibraryHouse.Infrastructure.Migrations
                     b.Property<DateTime>("DateOfDelivery")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<byte[]>("Picture")
-                        .HasColumnType("longblob");
 
                     b.HasKey("Id");
 

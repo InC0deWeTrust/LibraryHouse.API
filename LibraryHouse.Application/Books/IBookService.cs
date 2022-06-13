@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using LibraryHouse.Application.Dtos.Books;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryHouse.Application.Books
 {
@@ -29,5 +31,11 @@ namespace LibraryHouse.Application.Books
         Task UnsignCompanyForBook(int bookId, int companyId);
 
         Task<List<BookTypeDto>> GetAllTypesForBook();
+
+        Task AddAttachmentForBook(int bookId, IFormFile attachment);
+
+        Task<FileContentResult> DownloadAttachment(int bookId);
+
+        Task AddPicture(int bookId, IFormFile picture);
     }
 }

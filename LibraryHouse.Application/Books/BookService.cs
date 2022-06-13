@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ using LibraryHouse.Infrastructure.Entities.Books;
 using LibraryHouse.Infrastructure.Entities.Companies;
 using LibraryHouse.Infrastructure.Entities.Users;
 using LibraryHouse.Infrastructure.GenericRepository;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -80,10 +83,69 @@ namespace LibraryHouse.Application.Books
                 Name = createBookDto.Name.ToLower(),
                 DateOfDelivery = DateTime.Now,
                 BookTypeId = bookType.Id,
-                AuthorId = author.Id
+                AuthorId = author.Id,
+                Description = createBookDto.Description
             };
 
             await _bookRepository.AddAsync(newBook);
+        }
+
+        public async Task AddAttachmentForBook(int bookId, IFormFile attachment)
+        {
+            var book = await _bookRepository.GetAsync(bookId);
+
+            if (book == null)
+            {
+                _logger.LogError($"Unable to find book with Id: {bookId}.");
+                throw new CustomUserFriendlyException($"Unable to find book with Id: {bookId}!");
+            }
+
+            if (attachment.Length > 0)
+            {
+                using (var target = new MemoryStream())
+                {
+                    await attachment.CopyToAsync(target);
+                    book.Attachment = target.ToArray();
+                }
+
+                _bookRepository.Update(book);
+            }
+            else
+            {
+                _logger.LogError($"Unable to read attachment for book with Id: {bookId}.");
+                throw new CustomUserFriendlyException($"Unable to read attachment for book with Id: {bookId}!");
+            }
+        }
+
+        public async Task<FileContentResult> DownloadAttachment(int bookId)
+        {
+            var book = await _bookRepository.GetAsync(bookId);
+
+            if (book == null)
+            {
+                _logger.LogError($"Unable to find book with Id: {bookId}.");
+                throw new CustomUserFriendlyException($"Unable to find book with Id: {bookId}!");
+            }
+
+            if (book.Attachment == null)
+            {
+                _logger.LogError($"No Attachment for book with Id: {bookId}.");
+                throw new CustomUserFriendlyException($"No Attachment for book with Id: {bookId}!");
+            }
+
+            byte[] attachment = book.Attachment;
+            string mimeType = "application/pdf";
+
+            //return new DownloadBookDto
+            //{
+            //    File = book.Attachment,
+            //    FileName = book.Name
+            //};
+
+            return new FileContentResult(attachment, mimeType)
+            {
+                FileDownloadName = $"{book.Name}.pdf"
+            };
         }
 
         public async Task<BookDto> GetById(int bookId)
@@ -96,7 +158,15 @@ namespace LibraryHouse.Application.Books
                 throw new CustomUserFriendlyException($"Unable to find book with Id: {bookId}!");
             }
 
-            return _mapper.Map<BookDto>(book);
+            var bookToReturn = _mapper.Map<BookDto>(book);
+
+            if (book.Picture != null)
+            {
+                var pic = GetAndDecodePicture(book.Picture, book.Name);
+                bookToReturn.PictureResult = pic;
+            }
+
+            return bookToReturn;
         }
 
         public async Task<FullInfoBookDto> GetByIdFullInfoAboutBook(int bookId)
@@ -122,7 +192,18 @@ namespace LibraryHouse.Application.Books
                 .GetAll()
                 .ToListAsync();
 
-            return _mapper.Map<List<BookDto>>(books);
+            var booksToReturn = _mapper.Map<List<BookDto>>(books);
+
+            foreach (var book in books)
+            {
+                if (book.Picture != null)
+                {
+                    var pic = GetAndDecodePicture(book.Picture, book.Name);
+                    booksToReturn.FirstOrDefault(x => x.Name.ToLower() == book.Name.ToLower()).PictureResult = pic;
+                }
+            }
+
+            return booksToReturn;
         }
 
         public async Task Update(UpdateBookDto updateBookDto)
@@ -232,6 +313,43 @@ namespace LibraryHouse.Application.Books
                 .ToListAsync();
 
             return _mapper.Map<List<BookTypeDto>>(bookTypes);
+        }
+
+        public async Task AddPicture(int bookId, IFormFile picture)
+        {
+            var book = await _bookRepository.GetAsync(bookId);
+
+            if (book == null)
+            {
+                _logger.LogError($"Unable to find book with id {bookId} and add picture to it");
+                throw new CustomUserFriendlyException("Such book don't exist");
+            }
+
+            if (picture.Length > 0)
+            {
+                using (var toTarget = new MemoryStream())
+                {
+                    await picture.CopyToAsync(toTarget);
+                    book.Picture = toTarget.ToArray();
+                }
+
+                _bookRepository.Update(book);
+            }
+            else
+            {
+                _logger.LogError($"Unable to find product with id {bookId} and add picture to it");
+                throw new CustomUserFriendlyException("Such book don't exist");
+            }
+        }
+
+        private FileContentResult GetAndDecodePicture(byte[] picture, string bookName)
+        {
+            string mimeType = "application/png";
+
+            return new FileContentResult(picture, mimeType)
+            {
+                FileDownloadName = $"{bookName}.png"
+            };
         }
     }
 }

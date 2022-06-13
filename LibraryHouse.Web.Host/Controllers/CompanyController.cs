@@ -21,7 +21,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin, SuperAdmin")]
         [Route("Create")]
         public async Task CreateCompany(CreateCompanyDto createCompanyDto)
         {
@@ -29,7 +28,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin, SuperAdmin")]
         [Route("Get")]
         public async Task<CompanyDto> GetCompanyById(int companyId)
         {
@@ -37,7 +35,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin, SuperAdmin")]
         [Route("GetAll")]
         public async Task<List<CompanyDto>> GetAllCompanies()
         {
@@ -45,7 +42,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpDelete]
-        //[Authorize(Roles = "Admin, SuperAdmin")]
         [Route("Delete")]
         public async Task DeleteCompany(int companyId)
         {

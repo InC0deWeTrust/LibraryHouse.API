@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibraryHouse.Application.Books;
 using LibraryHouse.Application.Dtos.Books;
+using LibraryHouse.Web.Host.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace LibraryHouse.Web.Host.Controllers
 {
@@ -21,7 +23,28 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin, SuperAdmin")]
+        [Route("AddPictureToBook")]
+        public async Task AddPicture(int bookId, IFormFile picture)
+        {
+            await _bookService.AddPicture(bookId, picture);
+        }
+
+        [HttpPost]
+        [Route("AddPdf")]
+        public async Task AddAttachmentForBook(int bookId, IFormFile attachment)
+        {
+            await _bookService.AddAttachmentForBook(bookId, attachment);
+        }
+
+        [HttpGet]
+        [FileResultContentType("application/pdf")]
+        [Route("DownloadPdf")]
+        public async Task<ActionResult> DownloadBook([FromHeader] int bookId)
+        {
+            return await _bookService.DownloadAttachment(bookId);
+        }
+
+        [HttpPost]
         [Route("Create")]
         public async Task CreateBook([FromBody] CreateBookDto createBookDto)
         {
@@ -29,7 +52,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
         [Route("Get")]
         public async Task<BookDto> GetBookById([FromHeader] int bookId)
         {
@@ -37,7 +59,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
         [Route("GetFullInfo")]
         public async Task<FullInfoBookDto> GetFullInfoForBookById([FromHeader] int bookId)
         {
@@ -45,7 +66,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
         [Route("GetAll")]
         public async Task<List<BookDto>> GetAllBooks()
         {
@@ -53,7 +73,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
         [Route("GetAllTypes")]
         public async Task<List<BookTypeDto>> GetAllBookTypes()
         {
@@ -61,7 +80,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPut]
-        //[Authorize(Roles = "Admin, SuperAdmin")]
         [Route("Update")]
         public async Task UpdateBook([FromBody] UpdateBookDto updateBookDto)
         {
@@ -69,7 +87,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpDelete]
-        //[Authorize(Roles = "Admin, SuperAdmin")]
         [Route("Delete")]
         public async Task DeleteBook([FromHeader] int bookId)
         {
@@ -77,7 +94,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
         [Route("ReserveBook")]
         public async Task ReserveBookForUser([FromHeader] int userId, int bookId)
         {
@@ -85,7 +101,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpDelete]
-        //[Authorize]
         [Route("ReturnBook")]
         public async Task ReturnBookBackFromUser([FromHeader] int userId, int bookId)
         {
@@ -93,7 +108,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin, SuperAdmin")]
         [Route("AddCompany")]
         public async Task AssignCompanyToBook([FromHeader] int bookId, int companyId)
         {
@@ -101,7 +115,6 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpDelete]
-        //[Authorize(Roles = "Admin, SuperAdmin")]
         [Route("RemoveCompany")]
         public async Task RemoveCompanyFromBook([FromHeader] int bookId, int companyId)
         {

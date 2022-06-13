@@ -11,5 +11,7 @@ namespace LibraryHouse.Application.Dtos.Authors
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public List<string> BookNames { get; set; }
     }
 }

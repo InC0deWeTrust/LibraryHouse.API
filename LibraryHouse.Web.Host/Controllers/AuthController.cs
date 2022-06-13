@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LibraryHouse.Application.Auth;
 using LibraryHouse.Application.Dtos.Auth;
 using LibraryHouse.Application.Dtos.Login;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryHouse.Web.Host.Controllers
 {
@@ -21,6 +22,7 @@ namespace LibraryHouse.Web.Host.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Login")]
         public async Task<AuthDto> LoginUser([FromBody] LoginDto loginDto)
         {

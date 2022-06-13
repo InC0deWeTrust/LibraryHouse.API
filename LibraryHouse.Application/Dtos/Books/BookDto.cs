@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using LibraryHouse.Infrastructure.Entities.Authors;
 using LibraryHouse.Infrastructure.Entities.Books;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryHouse.Application.Dtos.Books
 {
@@ -17,5 +18,7 @@ namespace LibraryHouse.Application.Dtos.Books
         public DateTime DateOfDelivery { get; set; }
 
         public int AuthorId { get; set; }
+
+        public FileContentResult PictureResult { get; set; }
     }
 }

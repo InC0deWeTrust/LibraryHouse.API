@@ -6,14 +6,19 @@ namespace LibraryHouse.Infrastructure.Entities.Books
 {
     public enum BookTypeEnum
     {
-        Action = 1,
+        Fantasy = 1,
         Adventure,
-        Classics,
-        Detective,
-        Fantasy,
-        Horror,
+        Romance,
+        Contemporary,
+        Dystopian,
         Mystery,
-        Comic,
-        Romance
+        Horror,
+        Thriller,
+        Paranormal,
+        History,
+        Health,
+        Motivational,
+        Cooking,
+        Development
     }
 }

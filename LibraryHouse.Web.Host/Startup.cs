@@ -14,6 +14,7 @@ using LibraryHouse.Application.Auth;
 using LibraryHouse.Application.DI;
 using LibraryHouse.Application.Middleware;
 using LibraryHouse.Infrastructure.ContextDb;
+using LibraryHouse.Web.Host.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -84,6 +85,7 @@ namespace LibraryHouse.WebHost
                     Title = "LibraryHouse Control Panel API",
                     Description = "The tool for calling and testing methods from LibraryHouse API."
                 });
+                options.OperationFilter<FileResultContentTypeOperationFilter>();
             });
 
             services.AddControllers()

@@ -7,8 +7,6 @@ namespace LibraryHouse.Infrastructure.Entities.Roles
     public enum RoleEnum
     {
         SuperAdmin = 1,
-        Admin,
-        User,
-        Guest
+        User
     }
 }
